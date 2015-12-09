@@ -60,3 +60,18 @@ class TestCSVLook(unittest.TestCase):
         self.assertEqual(next(input_file), u'|  4 | 5 | ʤ  |\n')
         self.assertEqual(next(input_file), '|----+---+----|\n')
 
+    def test_my_unicode(self):
+        args = ['examples/customer_sample.csv']
+
+        output_file = six.StringIO()
+        utility = CSVLook(args, output_file)
+
+        utility.main()
+
+        input_file = six.StringIO(output_file.getvalue())
+
+        self.assertEqual(next(input_file), '|-----+------------+-----------+----------|\n')
+        self.assertEqual(next(input_file), '|  id | first_name | last_name | company  |\n')
+        self.assertEqual(next(input_file), '|-----+------------+-----------+----------|\n')
+        self.assertEqual(next(input_file), '|  1  | Ramon      | Jašek     |          |\n')
+        self.assertEqual(next(input_file), '|-----+------------+-----------+----------|\n')
